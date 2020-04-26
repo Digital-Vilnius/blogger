@@ -1,0 +1,61 @@
+.form {
+    overflow: hidden;
+
+    .form-group {
+        width: 100%;
+
+        label {
+            color: $color-grey;
+            font-size: 12px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+
+            &.required {
+                &:after {
+                    color: $color-red;
+                    content: '*';
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        &.has-error {
+            .form-control {
+                border: 1px solid $color-red;
+            }
+        }
+
+        .form-control {
+            border: 1px solid rgba($color-black, 0.15);
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 13px;
+            background-color: $color-white;
+
+            &:focus, &:active {
+                border-color: $color-blue;
+            }
+        }
+    }
+
+    .errors {
+        span {
+            margin-top: 5px;
+            color: $color-red;
+            font-weight: 500;
+            font-size: 11px;
+        }
+    }
+
+    .button-row {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        justify-content: flex-end;
+
+        .button {
+            margin-left: 5px;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{% extends 'shared/layouts/navigation-layout.html.twig' %}
+
+{% block top_navigation %}
+    <a class="navigation-item {% if header_active is defined and header_active == 'users' %}active{% endif %}" href="{{ path('admin users') }}">{{ 'users' | trans }}</a>
+    <a class="navigation-item {% if header_active is defined and header_active == 'blogs' %}active{% endif %}" href="{{ path('admin blogs') }}">{{ 'blogs' | trans }}</a>
+    <a class="navigation-item {% if header_active is defined and header_active == 'posts' %}active{% endif %}" href="{{ path('admin posts') }}">{{ 'posts' | trans }}</a>
+    <a class="navigation-item {% if header_active is defined and header_active == 'tags' %}active{% endif %}" href="{{ path('admin tags') }}">{{ 'tags' | trans }}</a>
+    <a class="navigation-item {% if header_active is defined and header_active == 'subscribers' %}active{% endif %}" href="{{ path('admin subscribers') }}">{{ 'subscribers' | trans }}</a>
+{% endblock %}

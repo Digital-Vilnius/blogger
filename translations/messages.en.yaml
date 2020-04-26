@@ -1,0 +1,63 @@
+users: Users
+id: Id
+email: Email
+roles: Roles
+created: Created
+updated: Updated
+actions: Actions
+blogs: Blogs
+api_token: API token
+edit: Edit
+delete: Delete
+count: Count
+no_data: No data
+none: None
+name: Name
+user: User
+origin: Origin
+blog: Blog
+tags: Tags
+posts: Posts
+logout: Logout
+login: Login
+add_user: Add user
+user_is_successfully_added: User is successfully added
+tag_is_successfully_added: Tag is successfully added
+tag_is_successfully_edited: Tag is successfully edited
+tag_is_successfully_deleted: Tag is successfully deleted
+blog_is_successfully_added: Blog is successfully added
+blog_is_successfully_edited: Blog is successfully edited
+user_is_successfully_edited: User is successfully edited
+password: Password
+save: Save
+add_tag: Add tag
+edit_tag: Edit tag
+add_blog: Add blog
+edit_blog: Edit blog
+edit_user: Edit user
+subscribers: Subscribers
+add_subscriber: Add subscriber
+delete_subscriber: Delete subscriber
+subscriber_is_successfully_added: Subscriber is successfully added
+subscriber_is_successfully_edited: Subscriber is successfully edited
+subscriber_is_successfully_deleted: Subscriber is successfully deleted
+edit_subscriber: Edit subscriber
+admin: Admin
+super_admin: Super admin
+title: Title
+summary: Summary
+content: Content
+post_is_successfully_added: Post is successfully added
+post_is_successfully_edited: Post is successfully edited
+post_is_successfully_deleted: Post is successfully deleted
+post_visibility_is_successfully_updated: Post visibility is successfully updated
+add_post: Add post
+delete_post: Delete post
+edit_post: Edit post
+title_and_summary: Title and summary
+back: Back
+change_password: Change password
+notifications: Notifications
+visible: Visible
+filter: Filter
+reset: Reset

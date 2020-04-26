@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+{% set title = 'edit_post' | trans %}
+{% set header_active = 'posts' %}
+
+{% block additional_header %}
+    <a class="button secondary" href="{{ path('admin posts') }}">{{ 'back' | trans }}</a>
+{% endblock %}
+
+{% block main %}
+    {% include 'admin/forms/post-form.html.twig' %}
+{% endblock %}

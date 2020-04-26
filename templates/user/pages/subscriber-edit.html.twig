@@ -1,0 +1,8 @@
+{% extends 'user/base.html.twig' %}
+{% set title = 'edit_subscriber' | trans %}
+{% set header_active = blog.name %}
+{% set subheader_active = 'subscribers' %}
+
+{% block main %}
+    {% include 'user/forms/subscriber-form.html.twig' %}
+{% endblock %}

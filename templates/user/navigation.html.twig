@@ -1,0 +1,14 @@
+{% extends 'shared/layouts/navigation-layout.html.twig' %}
+
+{% block top_navigation %}
+    {% for blog in getBlogs() %}
+        <a class="navigation-item {% if header_active is defined and header_active == blog.name %}active{% endif %}" href="{{ path('blog posts', {blogId: blog.id}) }}">{{ blog }}</a>
+    {% endfor %}
+{% endblock %}
+
+{% block bottom_navigation %}
+    <a class="navigation-item {% if subheader_active is defined and subheader_active == 'posts' %}active{% endif %}" href="{{ path('blog posts', {blogId: blog.id}) }}">{{ 'posts' | trans }}</a>
+    <a class="navigation-item {% if subheader_active is defined and subheader_active == 'tags' %}active{% endif %}" href="{{ path('blog tags', {blogId: blog.id}) }}">{{ 'tags' | trans }}</a>
+    <a class="navigation-item {% if subheader_active is defined and subheader_active == 'subscribers' %}active{% endif %}" href="{{ path('blog subscribers', {blogId: blog.id}) }}">{{ 'subscribers' | trans }}</a>
+{% endblock %}
+

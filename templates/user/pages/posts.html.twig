@@ -1,0 +1,76 @@
+{% extends 'user/base.html.twig' %}
+{% set title = 'posts' | trans %}
+{% set header_active = blog.name %}
+{% set subheader_active = 'posts' %}
+{% set colspan = 5 %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app/pages/posts') }}
+{% endblock %}
+
+{% block asides %}
+    {% include 'user/forms/posts-filter-form.html.twig' with {id: 'posts-filter', class: 'left'} %}
+{% endblock %}
+
+{% block additional_header_right %}
+    <a class="button primary" href="{{ path('blog post add', {blogId: blog.id}) }}">{{ 'add_post' | trans }}</a>
+{% endblock %}
+
+{% block additional_header_left %}
+    <i class="material-icons posts-filter-toggle">filter_list</i>
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'visible' | trans, column: 'visible', class: 'small-column center' } %}
+            <th>{{ 'title_and_summary' | trans }}</th>
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'updated' | trans, column: 'updated', class: 'medium-column center' } %}
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'created' | trans, column: 'created', class: 'medium-column center' } %}
+            <th class="center medium-column">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td class="center">
+                    {% include 'shared/forms/toggle-form.html.twig' with {checked: post.visible, action: path('blog post visibility', {blogId: post.blog.id, id: post.id})} %}
+                </td>
+                <td>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.summary[:185] ~ '...' }}</p>
+                </td>
+                <td class="center">{{ post.updated | dateTimeFormat }}</td>
+                <td class="center">{{ post.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle">
+                            <i class="material-icons">more_horiz</i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('blog post edit', {id: post.id, blogId: blog.id}) }}">{{ 'edit' | trans }}</a>
+                            <a class="dropdown-item" href="{{ path('blog post delete', {id: post.id, blogId: blog.id}) }}">{{ 'delete' | trans }}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if posts | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ colspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ colspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ postsCount }}</b></div>
+                    {% include 'shared/includes/paging.html.twig' %}
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

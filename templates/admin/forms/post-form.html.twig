@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.summary) }}
+    {{ form_row(form.blog) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.tags) }}
+<button class="button primary" type="submit">{{ 'save' | trans }}</button>
+{{ form_end(form) }}

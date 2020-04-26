@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.origin) }}
+<button class="button primary" type="submit">{{ 'save' | trans }}</button>
+{{ form_end(form) }}

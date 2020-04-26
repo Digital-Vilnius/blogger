@@ -1,0 +1,232 @@
+table.table {
+    width: 100%;
+    background-color: $color-white;
+    border-collapse: collapse;
+    box-shadow: $box-shadow;
+
+    thead {
+
+        tr {
+            height: 48px;
+            border-bottom: 1px solid $color-light-grey-2;
+
+            th {
+                padding: 0 20px;
+                font-size: 12px;
+                color: $color-grey;
+                text-align: left;
+
+                &.center {
+                    text-align: center;
+                }
+
+                &.medium-column {
+                    width: 160px;
+                }
+
+                &.small-column {
+                    width: 100px;
+                }
+
+                &.sortable {
+
+                    &.center a {
+                        justify-content: center;
+                    }
+
+                    &.left {
+                        justify-content: flex-start;
+                    }
+
+                    a {
+                        display: flex;
+                        align-items: center;
+
+                        span {
+                            font-size: 12px;
+                            color: $color-grey;
+                            position: relative;
+
+                            i {
+                                position: absolute;
+                                right: -23px;
+                                color: inherit;
+                                font-size: 18px;
+                                margin-left: 5px;
+                            }
+                        }
+
+                        &:hover,
+                        &.active {
+                            span {
+                                color: $color-dark-blue;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+
+    tbody {
+
+        tr {
+            border-bottom: 1px solid #e6e6e6;
+
+            &:nth-of-type(even) {
+                background-color: $color-lightest-grey;
+            }
+
+            &:hover {
+                background-color: $color-lightest-grey;
+                cursor: pointer;
+            }
+
+            &.loader {
+                height: 3px;
+                border-bottom: none;
+
+                > td {
+                    padding: 0;
+                    height: 3px;
+                    width: 100%;
+                }
+            }
+
+            td {
+                padding: 16px 20px;
+                color: $color-grey;
+                font-size: 12px;
+
+                &.no-data {
+                    text-align: center;
+                }
+
+                &.center {
+                    text-align: center;
+                    white-space: nowrap;
+                }
+
+                h3 {
+                    font-size: 13px;
+                    margin-bottom: 5px;
+                }
+
+                &.ellipsis {
+                    > div {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .dropdown {
+
+                    .dropdown-toggle {
+                        i {
+                            color: $color-grey;
+                            font-size: 20px;
+                        }
+
+                        & > .visible,
+                        &:hover {
+                            i {
+                                color: $color-dark-blue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    tfoot {
+
+        tr {
+            height: 48px;
+
+            td {
+                color: $color-grey;
+
+                .paging-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0 20px;
+
+                    .count {
+                        color: $color-grey;
+                        font-size: 12px;
+                        font-family: 'Open Sans', sans-serif;
+
+                        b {
+                            font-family: 'Open Sans', sans-serif;
+                        }
+                    }
+
+                    .paging {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        a {
+                            text-decoration: none;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0 5px;
+
+                            i {
+                                font-size: 18px;
+                                color: $color-grey;
+                            }
+
+                            &.active,
+                            &:hover {
+                                cursor: pointer;
+
+                                i {
+                                    color: $color-dark-blue;
+                                }
+                            }
+                        }
+
+                        .pages {
+                            margin: 0 5px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            a, span {
+                                width: 30px;
+                                height: 30px;
+                                margin: 0 2.5px;
+                                display: flex;
+                                border-radius: 15px;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 12px;
+                                font-weight: 500;
+                                color: $color-grey;
+                                text-decoration: none;
+
+                                &:hover {
+                                    color: $color-dark-blue;
+                                    cursor: pointer;
+                                }
+                            }
+
+                            span {
+                                color: $color-white;
+                                background-color: $color-dark-blue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

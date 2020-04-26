@@ -1,0 +1,10 @@
+logout:
+    path: /logout
+
+admin:
+    path: /admin
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: admin users
+        permanent: false
+        keepQueryParams: true

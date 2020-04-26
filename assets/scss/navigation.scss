@@ -1,0 +1,92 @@
+.navigation {
+
+    .navigation-item {
+        color: rgba($color-white, 0.6);
+        font-size: 12px;
+        margin-right: 30px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            color: rgba($color-white, 0.6);
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        &.active,
+        &:hover {
+            color: $color-white;
+
+            i {
+                color: $color-white;
+            }
+        }
+    }
+}
+
+.bottom-navigation {
+    width: 100%;
+    padding: 10px 0;
+    background-color: lighten($color-dark-blue, 8%);
+    border-top: 1px solid rgba($color-white, 0.1);
+    border-bottom: 1px solid rgba($color-white, 0.1);
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+}
+
+.top-navigation {
+    width: 100%;
+    padding: 15px 0;
+    min-height: 60px;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .title {
+                font-size: 16px;
+                color: $color-white;
+                border-right: 1px solid lighten($color-dark-blue, 10%);
+                padding-right: 25px;
+                margin-right: 25px;
+                font-weight: 600;
+            }
+
+            .dropdown {
+
+                .dropdown-toggle {
+                    & > .visible,
+                    &:hover {
+                        .navigation-item {
+                            color: $color-white;
+
+                            i {
+                                color: $color-white;
+                            }
+                        }
+                    }
+                }
+
+                .dropdown-menu {
+                    top: 49px;
+                }
+            }
+        }
+    }
+}

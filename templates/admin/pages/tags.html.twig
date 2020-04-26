@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+{% set title = 'tags' | trans %}
+{% set header_active = 'tags' %}
+{% set colspan = 6 %}
+
+{% block additional_header %}
+    <a class="button primary" href="{{ path('admin tag add') }}">{{ 'add_tag' | trans }}</a>
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="sortable center small">{{ 'id' | trans }}</th>
+            <th class="sortable">{{ 'name' | trans }}</th>
+            <th class="sortable">{{ 'blog' | trans }}</th>
+            <th class="sortable">{{ 'user' | trans }}</th>
+            <th class="sortable center">{{ 'updated' | trans }}</th>
+            <th class="sortable center">{{ 'created' | trans }}</th>
+            <th class="center">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td class="center">{{ tag.id }}</td>
+                <td class="ellipsis"><div>{{ tag.name }}</div></td>
+                <td class="ellipsis"><div>{{ tag.blog.name }}</div></td>
+                <td class="ellipsis"><div>{{ tag.blog.user.email }}</div></td>
+                <td class="center">{{ tag.updated | dateTimeFormat }}</td>
+                <td class="center">{{ tag.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="table-actions">
+                        <a title="{{ 'edit' | trans }}" href="{{ path('admin tag edit', {id: tag.id}) }}"><i class="material-icons">create</i></a>
+                        <a title="{{ 'delete' | trans }}" href="{{ path('admin', {id: tag.id}) }}"><i class="material-icons">delete</i></a>
+                    </div>
+                </td>
+
+            </tr>
+        {% endfor %}
+        {% if tags | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ colspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ colspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ tagsCount }}</b></div>
+                    {% include 'shared/includes/paging.html.twig' %}
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

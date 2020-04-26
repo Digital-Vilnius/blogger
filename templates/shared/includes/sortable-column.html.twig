@@ -1,0 +1,14 @@
+<th class="sortable {{ class is defined ? class : 'center' }}">
+    {% if app.request.query.get('sortColumn') is defined and app.request.query.get('sortColumn') == column %}
+        <a class="active" href="{{ getSortRoute(column, app.request) }}">
+            <span>
+                {{ title }}
+                <i class="material-icons">{{ app.request.query.get('sortType') == 'desc' ? 'arrow_drop_down' : 'arrow_drop_up' }}</i>
+            </span>
+        </a>
+    {% else %}
+        <a href="{{ getSortRoute(column, app.request) }}">
+            <span>{{ title }}</span>
+        </a>
+    {% endif %}
+</th>

@@ -1,0 +1,31 @@
+<nav class="top-navigation navigation">
+    <div class="container">
+        <div>
+            <h1 class="title">Blogger</h1>
+            {% block top_navigation %}{% endblock %}
+        </div>
+        <div>
+            <div class="dropdown dark">
+                <div class="dropdown-toggle">
+                    <div class="avatar">{{ app.user.email[:2] }}</div>
+                    <span class="navigation-item">
+                        {{ app.user.email }}
+                        <i class="material-icons">arrow_drop_down</i>
+                    </span>
+                </div>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('logout') }}">{{ 'notifications' | trans }}</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">{{ 'change_password' | trans }}</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">{{ 'logout' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{% if blog is defined %}
+    <nav class="bottom-navigation navigation">
+        <div class="container">
+            {% block bottom_navigation %}{% endblock %}
+        </div>
+    </nav>
+{% endif %}

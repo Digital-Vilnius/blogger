@@ -1,0 +1,48 @@
+security:
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+        db_provider:
+            entity:
+                class: App\Entity\User
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            anonymous: true
+
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800
+                path:     /(admin|en/admin)
+
+            logout:
+                path: logout
+                target: login
+
+        api:
+            pattern: ^/api
+            anonymous: false
+
+            guard:
+                authenticators:
+                    - App\Security\Api\TokenAuthenticator
+
+
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/login , roles: IS_AUTHENTICATED_ANONYMOUSLY}
+         - { path: ^/, roles: ROLE_USER }
+#         - { path: ^/api, roles: ROLE_USER }

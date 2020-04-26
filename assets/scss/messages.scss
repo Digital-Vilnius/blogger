@@ -1,0 +1,15 @@
+.message {
+    margin-bottom: 25px;
+    padding: 15px;
+    color: $color-white;
+    font-size: 12px;
+    box-shadow: $box-shadow;
+
+    &.success {
+        background-color: $color-green;
+    }
+
+    &.error {
+        background-color: $color-red;
+    }
+}

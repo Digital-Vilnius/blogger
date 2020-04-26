@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.roles) }}
+    {{ form_row(form.apiToken) }}
+    {{ form_row(form.password) }}
+    <button class="button primary" type="submit">{{ 'save' | trans }}</button>
+{{ form_end(form) }}

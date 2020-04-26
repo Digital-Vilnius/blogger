@@ -1,0 +1,35 @@
+.page-title {
+    background-color: $color-white;
+    padding:  15px 0;
+    height: 70px;
+
+    .container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: space-between;
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: $color-grey;
+        }
+
+        i {
+            font-size: 18px;
+            color: $color-grey;
+            margin-left: 10px;
+
+            &:hover {
+                color: $color-dark-blue;
+                cursor: pointer;
+            }
+        }
+    }
+}

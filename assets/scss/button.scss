@@ -1,0 +1,54 @@
+.button{
+    padding: 0 25px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+
+    i {
+        font-size: 18px;
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+
+    &.primary {
+        background-color: $color-blue;
+        color: $color-white;
+        border: 1px solid $color-blue;
+
+        &:hover,
+        &.active {
+            background-color: darken($color-blue, 10%);
+        }
+    }
+
+    &.danger {
+        background-color: $color-red;
+        color: $color-white;
+        border: 1px solid $color-red;
+
+        &:hover,
+        &.active {
+            background-color: darken($color-red, 10%);
+        }
+    }
+
+    &.secondary {
+        background-color: $color-grey;
+        color: $color-white;
+        border: 1px solid $color-grey;
+
+        &:hover,
+        &.active {
+            background-color: darken($color-grey, 10%);
+        }
+    }
+
+    &:hover,
+    &.active {
+        cursor: pointer;
+    }
+}
