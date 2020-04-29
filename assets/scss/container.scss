@@ -9,7 +9,7 @@
     width: 100%;
     margin-bottom: 10px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     &:last-of-type {
@@ -22,5 +22,17 @@
 
     .col-6 {
         width: calc(50% - 5px);
+    }
+}
+
+.space-between {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    > .content {
+        background-color: $color-white;
+        box-shadow: $box-shadow;
+        padding: 15px;
     }
 }

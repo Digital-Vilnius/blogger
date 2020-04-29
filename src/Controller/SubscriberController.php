@@ -36,11 +36,11 @@ class SubscriberController extends AbstractController
     public function add(Request $request, Blog $blog)
     {
         $subscriber = new Subscriber();
+        $subscriber->setBlog($blog);
         $form = $this->createForm(SubscriberType::class, $subscriber, ['isAdmin' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $subscriber->setBlog($blog);
             $this->entityManager->persist($subscriber);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('subscriber_is_successfully_added'));

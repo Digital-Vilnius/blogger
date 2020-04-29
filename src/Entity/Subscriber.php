@@ -4,10 +4,16 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SubscriberRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @UniqueConstraint(columns={"blog_id", "email"})
+ * })
+ * @UniqueEntity(fields={"blog", "email"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Subscriber

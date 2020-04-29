@@ -1,0 +1,14 @@
+.section {
+    margin-bottom: 50px;
+
+    .section-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: $color-grey;
+        margin-bottom: 15px;
+    }
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}

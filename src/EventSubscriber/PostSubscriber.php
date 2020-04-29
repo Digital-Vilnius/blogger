@@ -2,21 +2,24 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Notification;
 use App\Entity\Post;
-use App\Entity\Subscriber;
-use App\Notifier\PostNotification;
+use App\Enum\NotificationTypes;
+use App\Service\NotificationServiceInterface;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Notifier\NotifierInterface;
 
 class PostSubscriber implements EventSubscriber
 {
-    private $notifier;
+    private $notificationService;
+    private $entityManager;
 
-    public function __construct(NotifierInterface $notifier)
+    public function __construct(NotificationServiceInterface $notificationService, EntityManagerInterface $entityManager)
     {
-        $this->notifier = $notifier;
+        $this->notificationService = $notificationService;
+        $this->entityManager = $entityManager;
     }
 
     public function getSubscribedEvents()
@@ -29,7 +32,9 @@ class PostSubscriber implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Post) {
-            $this->notifier->send(new PostNotification(), $entity->getSubscribersEmails());
+            $user = $entity->getBlog()->getUser();
+            $notification = $this->entityManager->getRepository(Notification::class)->fetchUserNotificationByType($user, NotificationTypes::ADD_SUBSCRIBER);
+            $this->notificationService->notify($notification);
         }
     }
 }

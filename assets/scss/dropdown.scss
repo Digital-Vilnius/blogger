@@ -16,11 +16,11 @@
 
     &.dark {
         .dropdown-menu {
-            border: 1px solid rgba($color-white, 0.1);
-            background-color: $color-dark-blue;
+            border: 1px solid lighten($color-dark-grey, 8%);
+            background-color: $color-dark-grey;
 
             .dropdown-item {
-                color: rgba($color-white, 0.6);
+                color: rgba($color-white, 0.7);
 
                 &.active,
                 &:hover {
@@ -55,7 +55,7 @@
             }
 
             &:hover {
-                color: $color-dark-blue;
+                color: $color-blue;
             }
         }
     }

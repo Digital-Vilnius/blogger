@@ -1,0 +1,32 @@
+{% extends 'user/base.html.twig' %}
+{% set title = 'notifications' | trans %}
+{% set header_active = 'user' %}
+{% set subheader_active = 'notifications' %}
+{% set colspan = 3 %}
+
+{% block main %}
+    <section class="section">
+        <form class="form" method="post" novalidate>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'notification' | trans }}</th>
+                    <th class="center small-column">{{ 'sms' | trans }}</th>
+                    <th class="center small-column">{{ 'push' | trans }}</th>
+                    <th class="center small-column">{{ 'email' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for notification in form.notifications %}
+                        {{ form_row(notification) }}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="button-row">
+                <a class="button secondary" href="{{ path('profile') }}">{{ 'back' | trans }}</a>
+                <button class="button primary" type="submit">{{ 'save' | trans }}</button>
+            </div>
+            {{ form_row(form._token) }}
+        </form>
+    </section>
+{% endblock %}

@@ -12,7 +12,23 @@
     {{- parent() -}}
 {%- endblock textarea_widget %}
 
-{# Rows #}
+{% block notification_row %}
+    <tr>
+        <td>
+            <h3>{{ form.vars.value.type | lower | trans }}</h3>
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like</p>
+        </td>
+        <td class="center medium-column">
+            {{- form_widget(form.sms) -}}
+        </td>
+        <td class="center medium-column">
+            {{- form_widget(form.push) -}}
+        </td>
+        <td class="center medium-column">
+            {{- form_widget(form.email) -}}
+        </td>
+    </tr>
+{% endblock notification_row %}
 
 {% block form_row -%}
     <div class="form-group {{ form.vars.name }}{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
@@ -21,7 +37,18 @@
         {{- form_errors(form) -}}
     </div>
 {%- endblock form_row %}
-{# Errors #}
+
+{% block checkbox_widget -%}
+    {%- set widget_class = attr.class | default('') -%}
+    {%- if 'switch' in widget_class -%}
+        <div class="switch">
+            {{- parent() -}}
+            <span class="slider"></span>
+        </div>
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock checkbox_widget %}
 
 {% block form_errors -%}
     {% if errors|length > 0 -%}

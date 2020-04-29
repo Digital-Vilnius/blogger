@@ -3,6 +3,13 @@
 {% set header_active = blog.name %}
 {% set subheader_active = 'posts' %}
 
+{% block javascripts %}
+    {{ encore_entry_script_tags('app/pages/post-form') }}
+    <script>
+        const blogId = '{{ blog.id }}';
+    </script>
+{% endblock %}
+
 {% block main %}
     {% include 'user/forms/post-form.html.twig' %}
 {% endblock %}

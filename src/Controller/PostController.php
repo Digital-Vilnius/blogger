@@ -35,11 +35,11 @@ class PostController extends AbstractController
     public function add(Request $request, Blog $blog)
     {
         $post = new Post();
+        $post->setBlog($blog);
         $form = $this->createForm(PostType::class, $post, ['isAdmin' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setBlog($blog);
             $this->entityManager->persist($post);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('post_is_successfully_added'));
@@ -75,6 +75,7 @@ class PostController extends AbstractController
         return $this->render('user/pages/post-edit.html.twig', [
             'form' => $form->createView(),
             'blog' => $blog,
+            'post' => $post,
         ]);
     }
 

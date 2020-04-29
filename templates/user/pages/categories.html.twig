@@ -1,0 +1,57 @@
+{% extends 'user/base.html.twig' %}
+{% set title = 'categories' | trans %}
+{% set colspan = 4 %}
+{% set header_active = blog.name %}
+{% set subheader_active = 'categories' %}
+
+{% block additional_header_right %}
+    <a class="button primary" href="{{ path('blog category add', {blogId: blog.id}) }}">{{ 'add_category' | trans }}</a>
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'name' | trans, column: 'name', class: 'left' } %}
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'updated' | trans, column: 'updated', class: 'medium-column center' } %}
+            {% include 'shared/includes/sortable-column.html.twig' with {title: 'created' | trans, column: 'created', class: 'medium-column center' } %}
+            <th class="center medium-column">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td class="ellipsis"><div>{{ category.name }}</div></td>
+                <td class="center">{{ category.updated | dateTimeFormat }}</td>
+                <td class="center">{{ category.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle">
+                            <i class="material-icons">more_horiz</i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('blog category edit', {blogId: blog.id, id: category.id}) }}">{{ 'edit' | trans }}</a>
+                            <a class="dropdown-item" href="{{ path('blog category delete', {blogId: blog.id, id: category.id}) }}">{{ 'delete' | trans }}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if categories | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ colspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ colspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ categoriesCount }}</b></div>
+                    {% include 'shared/includes/paging.html.twig' %}
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

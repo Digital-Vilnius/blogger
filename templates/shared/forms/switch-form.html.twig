@@ -1,0 +1,6 @@
+<form method="post" action="{{ action }}">
+    <div class="switch">
+        <input {{ checked == 1 ? 'checked' : '' }} oninput="this.form.submit()" type="checkbox">
+        <span class="slider"></span>
+    </div>
+</form>

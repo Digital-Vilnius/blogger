@@ -3,9 +3,13 @@
 namespace App\Form\Type;
 
 use App\Entity\Blog;
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Form\DataTransformer\TagsArrayToStringTransformer;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -18,10 +22,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PostType extends AbstractType
 {
     private $translator;
+    private $entityManager;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->translator = $translator;
+        $this->entityManager = $entityManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,19 +36,24 @@ class PostType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => $this->translator->trans('title')
             ])
-            ->add('summary', TextareaType::class, [
+            ->add('summary', CKEditorType::class, [
                 'label' => $this->translator->trans('summary')
             ])
-            ->add('content', TextareaType::class, [
+            ->add('content', CKEditorType::class, [
                 'label' => $this->translator->trans('content')
             ])
             ->add('visible', CheckboxType::class, [
-                'label' => $this->translator->trans('visible')
+                'label' => $this->translator->trans('visible'),
+                'attr' => ['class' => 'switch'],
             ])
-            ->add('tags', EntityType::class, [
+            ->add('category', EntityType::class, [
+                'label' => $this->translator->trans('category'),
+                'class' => Category::class,
+                'required' => false
+            ])
+            ->add('tags', TextType::class, [
                 'label' => $this->translator->trans('tags'),
-                'class' => Tag::class,
-                'multiple' => true,
+                'attr' => ['class' => 'tags-input']
             ]);
 
         if ($options['isAdmin']) {
@@ -51,6 +62,8 @@ class PostType extends AbstractType
                 'class' => Blog::class
             ]);
         }
+
+        $builder->get('tags')->addModelTransformer(new TagsArrayToStringTransformer($this->entityManager, $builder->getData()->getBlog()));
     }
 
     public function configureOptions(OptionsResolver $resolver)

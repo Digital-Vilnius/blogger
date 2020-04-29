@@ -1,0 +1,8 @@
+{% extends 'shared/layouts/full-width-layout.html.twig' %}
+
+{% block main %}
+    <form class="form" method="post">
+        <div>{% block left_content %}{% endblock %}</div>
+        <div>{% block right_content %}{% endblock %}</div>
+    </form>
+{% endblock %}

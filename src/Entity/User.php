@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,9 +34,14 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="field_is_required")
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $phone;
 
     /**
      * @Assert\NotBlank(message="field_is_required")
@@ -59,6 +65,11 @@ class User implements UserInterface
      */
     private $blogs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user")
+     */
+    private $notifications;
+
     public function __toString(): string
     {
         return $this->email;
@@ -67,6 +78,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->blogs = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -155,13 +167,33 @@ class User implements UserInterface
         return null;
     }
 
-    public function getBlogs()
+    public function getBlogs(): Collection
     {
         return $this->blogs;
     }
 
-    public function setBlogs(ArrayCollection $blogs): void
+    public function setBlogs(Collection $blogs): void
     {
         $this->blogs = $blogs;
+    }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(Collection $notifications): void
+    {
+        $this->notifications = $notifications;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
     }
 }

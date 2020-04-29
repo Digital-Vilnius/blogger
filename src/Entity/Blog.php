@@ -4,10 +4,16 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @UniqueConstraint(columns={"user_id", "name"})
+ * })
+ * @UniqueEntity(fields={"user", "name"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Blog
@@ -41,9 +47,14 @@ class Blog
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="blog")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="blog", cascade={"persist"})
      */
     private $tags;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="blog")
+     */
+    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="blogs")
@@ -66,6 +77,8 @@ class Blog
     {
         $this->posts = new ArrayCollection();
         $this->subscribers = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -124,6 +137,22 @@ class Blog
         $this->tags = $tags;
     }
 
+    public function addTag(Tag $tag): void
+    {
+        if (!$this->tags->contains($tag))
+        {
+            $this->tags->add($tag);
+        }
+    }
+
+    public function removeTag(Tag $tag): void
+    {
+        if ($this->tags->contains($tag))
+        {
+            $this->tags->removeElement($tag);
+        }
+    }
+
     public function getOrigin(): ?string
     {
         return $this->origin;
@@ -162,5 +191,15 @@ class Blog
     public function setSubscribers(ArrayCollection $subscribers): void
     {
         $this->subscribers = $subscribers;
+    }
+
+    public function getCategories(): ArrayCollection
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(ArrayCollection $categories): void
+    {
+        $this->categories = $categories;
     }
 }

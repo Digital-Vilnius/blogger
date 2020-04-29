@@ -35,7 +35,7 @@
         {% for post in posts %}
             <tr>
                 <td class="center">
-                    {% include 'shared/forms/toggle-form.html.twig' with {checked: post.visible, action: path('blog post visibility', {blogId: post.blog.id, id: post.id})} %}
+                    {% include 'shared/forms/switch-form.html.twig' with {checked: post.visible, action: path('blog post visibility', {blogId: post.blog.id, id: post.id})} %}
                 </td>
                 <td>
                     <h3>{{ post.title }}</h3>
@@ -50,6 +50,7 @@
                         </div>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('blog post edit', {id: post.id, blogId: blog.id}) }}">{{ 'edit' | trans }}</a>
+                            <a class="dropdown-item" href="{{ path('blog post comments', {postId: post.id, blogId: blog.id}) }}">{{ 'comments' | trans }}</a>
                             <a class="dropdown-item" href="{{ path('blog post delete', {id: post.id, blogId: blog.id}) }}">{{ 'delete' | trans }}</a>
                         </div>
                     </div>

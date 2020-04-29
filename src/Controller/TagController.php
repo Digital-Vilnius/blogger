@@ -36,11 +36,11 @@ class TagController extends AbstractController
     public function add(Request $request, Blog $blog)
     {
         $tag = new Tag();
+        $tag->setBlog($blog);
         $form = $this->createForm(TagType::class, $tag, ['isAdmin' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tag->setBlog($blog);
             $this->entityManager->persist($tag);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('tag_is_successfully_added'));
@@ -75,7 +75,8 @@ class TagController extends AbstractController
 
         return $this->render('user/pages/tag-edit.html.twig', [
             'form' => $form->createView(),
-            'blog' => $blog
+            'blog' => $blog,
+            'tag' => $tag,
         ]);
     }
 

@@ -5,14 +5,21 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JsonSerializable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @UniqueConstraint(columns={"blog_id", "name"})
+ * })
+ * @UniqueEntity(fields={"blog", "name"})
  * @ORM\HasLifecycleCallbacks()
  */
-class Tag
+class Tag implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -128,5 +135,13 @@ class Tag
     public function setBlog(Blog $blog): void
     {
         $this->blog = $blog;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
     }
 }

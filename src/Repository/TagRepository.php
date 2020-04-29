@@ -33,6 +33,18 @@ class TagRepository extends ServiceEntityRepository
             ->getSingleResult();
     }
 
+    public function fetchUserTagByName(string $name)
+    {
+        return $this->createQueryBuilder('tag')
+            ->join('tag.blog', 'blog')
+            ->where('blog.user = :user')
+            ->andWhere('tag.name = :name')
+            ->setParameter('name', $name)
+            ->setParameter('user', $this->user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function fetchAll(TagsFilter $filter, Sort $sort, Paging $paging)
     {
         $qb = $this->createQueryBuilder('tag')
@@ -57,8 +69,9 @@ class TagRepository extends ServiceEntityRepository
     {
         if ($filter->getKeyword()) {
             $orX = $qb->expr()->orX();
-            $orX->add($qb->expr()->like('tag.name', $filter->getKeyword()));
-            $qb->andWhere($qb->expr()->orX($orX));
+            $orX->add($qb->expr()->like('tag.name', ':keyword'));
+            $qb->andWhere($qb->expr()->orX($orX))
+            ->setParameter('keyword', '%' . $filter->getKeyword() . '%');
         }
 
         if ($filter->getBlogId()) {

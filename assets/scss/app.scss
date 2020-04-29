@@ -5,6 +5,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
 
 @import "variables/colors";
 @import "variables/helpers";
+@import "variables/fonts";
 
 @import "base";
 @import "container";
@@ -18,8 +19,10 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import "avatar";
 @import "main";
 @import "messages";
-@import "toggle";
+@import "switch";
 @import "aside";
 @import "overlay";
 @import "scrollbar";
 @import "choice";
+@import "details";
+@import "section";

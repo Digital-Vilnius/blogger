@@ -61,13 +61,24 @@ class Post
     private $content;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinTable(
      *     joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )
      */
     private $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="posts")
+     * @ORM\JoinColumn()
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     */
+    private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="posts")
@@ -78,6 +89,7 @@ class Post
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->visible = true;
     }
 
@@ -203,5 +215,25 @@ class Post
     public function setVisible(bool $visible): void
     {
         $this->visible = $visible;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function getComments(): ArrayCollection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(ArrayCollection $comments): void
+    {
+        $this->comments = $comments;
     }
 }

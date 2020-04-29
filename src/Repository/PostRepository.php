@@ -30,7 +30,21 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setParameter('user', $this->user)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
+    }
+
+    public function fetchUserBlogPost(int $blogId, int $postId)
+    {
+        return $this->createQueryBuilder('post')
+            ->join('post.blog', 'blog')
+            ->where('blog.user = :user')
+            ->andWhere('post.id = :postId')
+            ->andWhere('blog.id = :blogId')
+            ->setParameter('postId', $postId)
+            ->setParameter('blogId', $blogId)
+            ->setParameter('user', $this->user)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function fetchAll(PostsFilter $filter, Sort $sort, Paging $paging)
@@ -61,9 +75,16 @@ class PostRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->orX($orX));
         }
 
-        if ($filter->getTags()) {
+        if ($filter->getTags()->count() > 0) {
             $qb->andWhere('tags in (:tags)')
                 ->setParameter('tags', $filter->getTags());
+        }
+
+        if ($filter->getCategories()->count() > 0) {
+            $qb
+                ->join('post.category', 'category')
+                ->andWhere('category in (:categories)')
+                ->setParameter('categories', $filter->getCategories());
         }
 
         if ($filter->getBlogId()) {

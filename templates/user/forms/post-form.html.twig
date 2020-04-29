@@ -1,30 +1,85 @@
 <form class="form" method="post" novalidate>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.title) }}
+    <div class="space-between">
+        <div class="content">
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.title) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.summary) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.content) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.tags) }}
+                </div>
+            </div>
+            <div class="button-row">
+                <a class="button secondary" href="{{ path('blog posts', {blogId: blog.id}) }}">{{ 'back' | trans }}</a>
+                <button class="button primary" type="submit">{{ 'save' | trans }}</button>
+            </div>
         </div>
-        <div class="col-6">
-            {{ form_row(form.tags) }}
+        <div class="content">
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.visible) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.category) }}
+                </div>
+            </div>
+            {% if post is defined %}
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'created' | trans }}</label>
+                            <span>{{ post.created | dateTimeFormat }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'updated' | trans }}</label>
+                            <span>{{ post.updated | dateTimeFormat }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'views' | trans }}</label>
+                            <span>789</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'comments' | trans }}</label>
+                            <span>789</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'likes' | trans }}</label>
+                            <span>123</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.visible) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{ form_row(form.summary) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{ form_row(form.content) }}
-        </div>
-    </div>
-    <div class="button-row">
-        <a class="button secondary" href="{{ path('blog posts', {blogId: blog.id}) }}">{{ 'back' | trans }}</a>
-        <button class="button primary" type="submit">{{ 'save' | trans }}</button>
     </div>
     {{ form_row(form._token) }}
 </form>

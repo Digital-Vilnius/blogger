@@ -30,7 +30,7 @@ class SubscriberRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setParameter('user', $this->user)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     public function fetchAll(SubscribersFilter $filter, Sort $sort, Paging $paging)

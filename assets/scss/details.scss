@@ -1,0 +1,15 @@
+.details-item {
+    label {
+        color: $color-grey;
+        font-size: 12px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    span {
+        color: $color-black;
+        font-size: 13px;
+        display: block;
+    }
+}

@@ -1,4 +1,4 @@
-{% extends 'shared/layouts/aside.html.twig' %}
+{% extends 'shared/layouts/aside-layout.html.twig' %}
 
 {% block content %}
     <form class="aside-content form" action="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params') | merge({page: 1})) }}" method="get">
@@ -7,6 +7,11 @@
             <i class="material-icons close">clear</i>
         </div>
         <div class="aside-scrollable-content">
+            <div class="row">
+                <div class="col">
+                    {{ form_row(filterForm.categories) }}
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     {{ form_row(filterForm.tags) }}

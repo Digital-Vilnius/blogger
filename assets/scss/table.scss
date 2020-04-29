@@ -59,7 +59,7 @@ table.table {
                         &:hover,
                         &.active {
                             span {
-                                color: $color-dark-blue;
+                                color: $color-blue;
                                 cursor: pointer;
                             }
                         }
@@ -134,7 +134,7 @@ table.table {
                         & > .visible,
                         &:hover {
                             i {
-                                color: $color-dark-blue;
+                                color: $color-blue;
                             }
                         }
                     }
@@ -160,11 +160,6 @@ table.table {
                     .count {
                         color: $color-grey;
                         font-size: 12px;
-                        font-family: 'Open Sans', sans-serif;
-
-                        b {
-                            font-family: 'Open Sans', sans-serif;
-                        }
                     }
 
                     .paging {
@@ -189,7 +184,7 @@ table.table {
                                 cursor: pointer;
 
                                 i {
-                                    color: $color-dark-blue;
+                                    color: $color-blue;
                                 }
                             }
                         }
@@ -214,14 +209,14 @@ table.table {
                                 text-decoration: none;
 
                                 &:hover {
-                                    color: $color-dark-blue;
+                                    color: $color-blue;
                                     cursor: pointer;
                                 }
                             }
 
                             span {
                                 color: $color-white;
-                                background-color: $color-dark-blue;
+                                background-color: $color-blue;
                             }
                         }
                     }

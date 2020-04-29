@@ -61,3 +61,30 @@ notifications: Notifications
 visible: Visible
 filter: Filter
 reset: Reset
+password_is_successfully_changed: Password is successfully changed
+profile: Profile
+password_fields_must_match: Password fields must match
+new_password: New password
+repeat_new_password: Repeat new password
+current_password: Current password
+repeat_current_password: Repeat current password
+views: Views
+likes: Likes
+are_you_sure: Are you sure
+category_is_successfully_added: Category is successfully added
+category_is_successfully_edited: Category is successfully edited
+category_is_successfully_deleted: Category is successfully deleted
+categories: Categories
+category: Category
+add_category: Add category
+edit_category: Edit category
+delete_category: Delete category
+delete_tag: Delete tag
+home: Home
+notification: Notification
+push: Push
+comments: Comments
+notifications_are_successfully_updated: Notifications are successfully updated
+username: Username
+add_comment: Add comment
+sms: Sms

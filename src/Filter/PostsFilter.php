@@ -6,11 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class PostsFilter
 {
-    private $tagsSlugs;
     private $keyword;
     private $blogId;
     private $userId;
     private $tags;
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+    }
 
     public function getKeyword(): ?string
     {
@@ -42,13 +48,23 @@ class PostsFilter
         $this->userId = $userId;
     }
 
-    public function getTags(): ?array
+    public function getTags(): ?ArrayCollection
     {
         return $this->tags;
     }
 
-    public function setTags(?array $tags): void
+    public function setTags(?ArrayCollection $tags): void
     {
         $this->tags = $tags;
+    }
+
+    public function getCategories(): ?ArrayCollection
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?ArrayCollection $categories): void
+    {
+        $this->categories = $categories;
     }
 }

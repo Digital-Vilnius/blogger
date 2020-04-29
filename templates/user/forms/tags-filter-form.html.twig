@@ -1,4 +1,4 @@
-{% extends 'shared/layouts/aside.html.twig' %}
+{% extends 'shared/layouts/aside-layout.html.twig' %}
 
 {% block content %}
     <form class="aside-content form" action="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params') | merge({page: 1})) }}" method="get">
