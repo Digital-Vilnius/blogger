@@ -1,7 +1,10 @@
 <nav class="top-navigation navigation">
     <div class="container">
         <div>
-            <h1 class="title">Blogger</h1>
+            <a class="title-container" href="{{ path('home') }}">
+                <span class="logo"></span>
+                <h1 class="title">logger</h1>
+            </a>
             {% block top_navigation %}{% endblock %}
         </div>
         <div>
@@ -14,7 +17,6 @@
                     </span>
                 </div>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ path('profile') }}">{{ 'profile' | trans }}</a>
                     <a class="dropdown-item" href="{{ path('notifications') }}">{{ 'notifications' | trans }}</a>
                     <a class="dropdown-item" href="{{ path('change password') }}">{{ 'change_password' | trans }}</a>
                     <a class="dropdown-item" href="{{ path('logout') }}">{{ 'logout' | trans }}</a>

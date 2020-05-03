@@ -6,6 +6,7 @@ use App\Entity\Notification;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class NotificationRepository extends ServiceEntityRepository
@@ -18,6 +19,12 @@ class NotificationRepository extends ServiceEntityRepository
         $this->user = $tokenStorage->getToken()->getUser();
     }
 
+    /**
+     * @param User $user
+     * @param string $type
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
     public function fetchUserNotificationByType(User $user, string $type)
     {
         return $this->createQueryBuilder('notification')

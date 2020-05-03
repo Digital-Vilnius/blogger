@@ -1,3 +1,8 @@
 fos_ck_editor:
     base_path: "build/ckeditor"
     js_path:   "build/ckeditor/ckeditor.js"
+    default_config: config
+    configs:
+        config:
+            filebrowserImageUploadUrl: "api add blog post image"
+            filebrowserBrowseRouteType: 0

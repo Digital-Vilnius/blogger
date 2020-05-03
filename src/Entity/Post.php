@@ -4,15 +4,17 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Post
+class Post implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -81,6 +83,11 @@ class Post
     private $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PostImage", mappedBy="post")
+     */
+    private $images;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -90,6 +97,7 @@ class Post
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->images = new ArrayCollection();
         $this->visible = true;
     }
 
@@ -235,5 +243,28 @@ class Post
     public function setComments(ArrayCollection $comments): void
     {
         $this->comments = $comments;
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function setImages(Collection $images): void
+    {
+        $this->images = $images;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'slug' => $this->slug,
+            'title' => $this->title,
+            'summary' => $this->summary,
+            'tags' => $this->tags,
+            'content' => $this->content,
+            'created' => date_format($this->created, 'Y-m-d H:i:s'),
+            'updated' => $this->updated ? date_format($this->updated, 'Y-m-d H:i:s'): null
+        ];
     }
 }

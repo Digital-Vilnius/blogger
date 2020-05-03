@@ -8,6 +8,7 @@ use App\Model\Paging;
 use App\Model\Sort;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -81,10 +82,14 @@ class PostRepository extends ServiceEntityRepository
         }
 
         if ($filter->getCategories()->count() > 0) {
-            $qb
-                ->join('post.category', 'category')
+            $qb->join('post.category', 'category')
                 ->andWhere('category in (:categories)')
                 ->setParameter('categories', $filter->getCategories());
+        }
+
+        if ($filter->getVisible()) {
+            $qb->andWhere('post.visible = :visible')
+                ->setParameter('visible', $filter->getVisible());
         }
 
         if ($filter->getBlogId()) {

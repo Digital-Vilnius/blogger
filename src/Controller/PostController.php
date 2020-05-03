@@ -55,7 +55,7 @@ class PostController extends AbstractController
     /**
      * @Route("/blog/{blogId}/post/{id}/edit", name="blog post edit")
      * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
-     * @Entity("post", expr="repository.fetchUserPost(id)")
+     * @Entity("post", expr="repository.fetchUserBlogPost(blogId, id)")
      * @param Request $request
      * @param Post $post
      * @param Blog $blog
@@ -82,7 +82,7 @@ class PostController extends AbstractController
     /**
      * @Route("/blog/{blogId}/post/{id}/visibility", name="blog post visibility", methods={"POST"})
      * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
-     * @Entity("post", expr="repository.fetchUserPost(id)")
+     * @Entity("post", expr="repository.fetchUserBlogPost(blogId, id)")
      * @param Request $request
      * @param Post $post
      * @param Blog $blog
@@ -99,7 +99,7 @@ class PostController extends AbstractController
     /**
      * @Route("/blog/{blogId}/post/{id}/delete", name="blog post delete")
      * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
-     * @Entity("post", expr="repository.fetchUserPost(id)")
+     * @Entity("post", expr="repository.fetchUserBlogPost(blogId, id)")
      * @param Request $request
      * @param Post $post
      * @param Blog $blog

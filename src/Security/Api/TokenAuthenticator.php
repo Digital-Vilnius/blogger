@@ -2,9 +2,9 @@
 
 namespace App\Security\Api;
 
+use App\Contract\ResultResponse;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -35,7 +35,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         if (null === $credentials) return null;
-        return $this->entityManager->getRepository(User::class)->findOneBy(['apiToken' => $credentials]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['apiToken' => $credentials]);
+        if ($user) $user->addRole('ROLE_API_USER');
+        return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -50,14 +52,14 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = ['message' => strtr($exception->getMessageKey(), $exception->getMessageData())];
-        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+        return new ResultResponse($message, Response::HTTP_UNAUTHORIZED);
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $data = ['message' => 'Authentication Required'];
-        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+        $message = 'Authentication Required';
+        return new ResultResponse($message, Response::HTTP_UNAUTHORIZED);
     }
 
     public function supportsRememberMe()

@@ -11,6 +11,7 @@ class PostsFilter
     private $userId;
     private $tags;
     private $categories;
+    private $visible;
 
     public function __construct()
     {
@@ -66,5 +67,15 @@ class PostsFilter
     public function setCategories(?ArrayCollection $categories): void
     {
         $this->categories = $categories;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(?bool $visible): void
+    {
+        $this->visible = $visible;
     }
 }

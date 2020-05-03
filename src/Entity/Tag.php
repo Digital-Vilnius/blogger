@@ -140,7 +140,7 @@ class Tag implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
+            'slug' => $this->slug,
             'name' => $this->name
         ];
     }

@@ -1,12 +1,41 @@
 <form class="form" method="post" novalidate>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.name) }}
+    <div class="space-between">
+        <div class="content">
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.name) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.posts) }}
+                </div>
+            </div>
+            <div class="button-row">
+                <a class="button secondary" href="{{ path('blog categories', {blogId: blog.id}) }}">{{ 'back' | trans }}</a>
+                <button class="button primary" type="submit">{{ 'save' | trans }}</button>
+            </div>
         </div>
-    </div>
-    <div class="button-row">
-        <a class="button secondary" href="{{ path('blog categories', {blogId: blog.id}) }}">{{ 'back' | trans }}</a>
-        <button class="button primary" type="submit">{{ 'save' | trans }}</button>
+        <div class="content">
+            {% if category is defined %}
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'created' | trans }}</label>
+                            <span>{{ category.created | dateTimeFormat }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="details-item">
+                            <label>{{ 'updated' | trans }}</label>
+                            <span>{{ category.updated | dateTimeFormat }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
     {{ form_row(form._token) }}
 </form>

@@ -142,6 +142,11 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    public function addRole(string $role): void
+    {
+        $this->roles[] = $role;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;

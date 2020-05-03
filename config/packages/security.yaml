@@ -15,6 +15,14 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            pattern: ^/api
+            anonymous: false
+
+            guard:
+                authenticators:
+                    - App\Security\Api\TokenAuthenticator
+
         main:
             pattern: ^/
             anonymous: true
@@ -32,17 +40,9 @@ security:
                 path: logout
                 target: login
 
-        api:
-            pattern: ^/api
-            anonymous: false
-
-            guard:
-                authenticators:
-                    - App\Security\Api\TokenAuthenticator
-
 
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/login , roles: IS_AUTHENTICATED_ANONYMOUSLY}
+         - { path: ^/api, roles: ROLE_API_USER }
          - { path: ^/, roles: ROLE_USER }
-#         - { path: ^/api, roles: ROLE_USER }

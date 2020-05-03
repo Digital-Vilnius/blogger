@@ -2,14 +2,13 @@
 
 namespace App\Controller\Api;
 
+use App\Contract\ListResponse;
 use App\Controller\Base\ListController;
-use App\Entity\Post;
 use App\Entity\Tag;
-use App\Filter\PostsFilter;
 use App\Filter\TagsFilter;
+use App\Form\Type\TagsFilterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -25,10 +24,10 @@ class TagsController extends ListController
     }
 
     /**
-     * @Route("/api/blog/{blogId}/tags", name="api get blog tags", methods={"GET"})
+     * @Route("/api/blog/{blogId}/tags", name="api blog tags", methods={"GET"})
      * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
      * @param Request $request
-     * @return JsonResponse
+     * @return ListResponse
      */
     public function fetch(Request $request)
     {
@@ -36,9 +35,12 @@ class TagsController extends ListController
         $sort = $this->initSort($request);
         $paging = $this->initApiPaging($request);
 
+        $filterForm = $this->createForm(TagsFilterType::class, $filter);
+        $filterForm->handleRequest($request);
+
         $tags = $this->entityManager->getRepository(Tag::class)->fetchAll($filter, $sort, $paging);
         $tagsCount = $this->entityManager->getRepository(Tag::class)->countAll($filter);
-        return new JsonResponse(['result' => $tags, 'count' => $tagsCount]);
+        return new ListResponse($tags, $tagsCount);
     }
 
     private function initFilter(Request $request)
