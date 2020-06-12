@@ -1,0 +1,40 @@
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: center;
+
+    .breadcrumbs-item {
+        font-size: 12px;
+        margin-right: 5px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        .breadcrumbs-item-link {
+            color: rgba($color-grey, 0.75);
+
+            &:after {
+                color: rgba($color-grey, 0.75);
+                content: '/';
+                margin-left: 10px;
+                margin-right: 5px;
+                position: relative;
+                transition: all 0.2s ease;
+            }
+
+            &:hover {
+                color: $color-grey;
+
+                &:after {
+                    color: $color-grey;
+                }
+            }
+        }
+
+        .breadcrumbs-item-active {
+            color: $color-grey;
+        }
+    }
+}

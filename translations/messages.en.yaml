@@ -5,7 +5,6 @@ roles: Roles
 created: Created
 updated: Updated
 actions: Actions
-blogs: Blogs
 api_token: API token
 edit: Edit
 delete: Delete
@@ -13,78 +12,81 @@ count: Count
 no_data: No data
 none: None
 name: Name
-user: User
 origin: Origin
-blog: Blog
-tags: Tags
-posts: Posts
 logout: Logout
 login: Login
-add_user: Add user
-user_is_successfully_added: User is successfully added
-tag_is_successfully_added: Tag is successfully added
-tag_is_successfully_edited: Tag is successfully edited
-tag_is_successfully_deleted: Tag is successfully deleted
-blog_is_successfully_added: Blog is successfully added
-blog_is_successfully_edited: Blog is successfully edited
-user_is_successfully_edited: User is successfully edited
 password: Password
 save: Save
-add_tag: Add tag
-edit_tag: Edit tag
-add_blog: Add blog
-edit_blog: Edit blog
-edit_user: Edit user
-subscribers: Subscribers
-add_subscriber: Add subscriber
-delete_subscriber: Delete subscriber
-subscriber_is_successfully_added: Subscriber is successfully added
-subscriber_is_successfully_edited: Subscriber is successfully edited
-subscriber_is_successfully_deleted: Subscriber is successfully deleted
-edit_subscriber: Edit subscriber
 admin: Admin
-super_admin: Super admin
-title: Title
-summary: Summary
-content: Content
-post_is_successfully_added: Post is successfully added
-post_is_successfully_edited: Post is successfully edited
-post_is_successfully_deleted: Post is successfully deleted
-post_visibility_is_successfully_updated: Post visibility is successfully updated
-add_post: Add post
-delete_post: Delete post
-edit_post: Edit post
-title_and_summary: Title and summary
 back: Back
 change_password: Change password
-notifications: Notifications
 visible: Visible
 filter: Filter
 reset: Reset
 password_is_successfully_changed: Password is successfully changed
-profile: Profile
 password_fields_must_match: Password fields must match
 new_password: New password
 repeat_new_password: Repeat new password
 current_password: Current password
 repeat_current_password: Repeat current password
-views: Views
-likes: Likes
 are_you_sure: Are you sure
-category_is_successfully_added: Category is successfully added
-category_is_successfully_edited: Category is successfully edited
-category_is_successfully_deleted: Category is successfully deleted
-categories: Categories
-category: Category
-add_category: Add category
-edit_category: Edit category
-delete_category: Delete category
-delete_tag: Delete tag
-home: Home
-notification: Notification
-push: Push
-comments: Comments
-notifications_are_successfully_updated: Notifications are successfully updated
-username: Username
-add_comment: Add comment
 sms: Sms
+phone: Phone
+channel: Channel
+status: Status
+content: Content
+html_content: HTML content
+channels: Channels
+title: Title
+details: Details
+show_more: Show more
+keyword: Keyword
+dashboard: Dashboard
+date: Date
+activity: Activity
+authentication_required: Authentication required
+
+#Buttons
+buttons:
+    search: Search
+
+#Notification
+notifications: Notifications
+notification: Notification
+add_notification: Add notification
+edit_notification: Edit notification
+notification_is_successfully_added: Notification is successfully added
+notification_is_successfully_edited: Notification is successfully edited
+notification_is_successfully_deleted: Notification is successfully deleted
+delete_notification: Delete notifications
+
+#User
+user: User
+add_user: Add user
+edit_user: Edit user
+user_is_successfully_added: User is successfully added
+user_is_successfully_edited: User is successfully edited
+user_is_successfully_deleted: User is successfully deleted
+user_is_not_found: User is not found
+
+#Application
+application: Application
+applications: Applications
+add_application: Add application
+edit_application: Edit application
+delete_application: Delete application
+application_is_successfully_added: Application is successfully added
+application_is_successfully_edited: Application is successfully edited
+application_is_successfully_deleted: Application is successfully deleted
+
+#Subscriber
+subscriber: Subscriber
+subscribers: Subscribers
+edit_subscriber: Edit subscriber
+add_subscriber: Add subscriber
+delete_subscriber: Delete subscriber
+subscriber_is_successfully_added: Subscriber is successfully added
+subscriber_is_successfully_edited: Subscriber is successfully edited
+subscriber_email_notification_is_successfully_updated: Subscriber email notification is successfully updated
+subscriber_sms_notification_is_successfully_updated: Subscriber sms notification is successfully updated
+subscriber_is_successfully_deleted: Subscriber is successfully deleted

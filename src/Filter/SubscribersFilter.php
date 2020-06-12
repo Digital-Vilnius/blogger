@@ -2,28 +2,19 @@
 
 namespace App\Filter;
 
-class SubscribersFilter
+use App\Model\SearchableFilter;
+
+class SubscribersFilter extends SearchableFilter
 {
-    private $keyword;
-    private $blogId;
+    private $applicationId;
 
-    public function getKeyword(): ?string
+    public function getApplicationId(): ?int
     {
-        return $this->keyword;
+        return $this->applicationId;
     }
 
-    public function setKeyword(?string $keyword): void
+    public function setApplicationId(?int $applicationId): void
     {
-        $this->keyword = $keyword;
-    }
-
-    public function getBlogId(): ?int
-    {
-        return $this->blogId;
-    }
-
-    public function setBlogId(?int $blogId): void
-    {
-        $this->blogId = $blogId;
+        $this->applicationId = $applicationId;
     }
 }

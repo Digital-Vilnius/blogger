@@ -2,7 +2,7 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{{ title }} | Blogger</title>
+        <title>{{ title }} | Notifier</title>
         {{ encore_entry_link_tags('app') }}
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/png">
         {% block stylesheets %}{% endblock %}
@@ -10,7 +10,7 @@
     <body>
         {% block body %}{% endblock %}
         {% block asides %}{% endblock %}
-        {% include 'shared/includes/overlay.html.twig' %}
+        {% include 'overlay.html.twig' %}
         {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
     </body>

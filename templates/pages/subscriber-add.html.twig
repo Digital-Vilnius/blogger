@@ -1,0 +1,11 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'add_subscriber' | trans %}
+{% set header_active = 'subscribers' %}
+{% set breadcrumbs = [
+    {link: path('admin subscribers'), title: 'subscribers' | trans},
+    {title: 'add_subscriber' | trans}
+] %}
+
+{% block main %}
+    {% include 'forms/subscriber-form.html.twig' %}
+{% endblock %}

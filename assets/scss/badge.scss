@@ -1,0 +1,28 @@
+.badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: $color-grey;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $color-white;
+
+    &.pending {
+        background-color: $color-yellow;
+    }
+
+    &.send {
+        background-color: $color-green;
+    }
+
+    &.email {
+        background-color: $color-blue;
+    }
+
+    &.sms {
+        background-color: $color-purple;
+    }
+
+    &.failer {
+        background-color: $color-red;
+    }
+}

@@ -3,10 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,6 +21,24 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="field_is_required")
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $email;
+
+    /**
+     * @Assert\NotBlank(message="field_is_required")
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $password;
+
+    /**
+     * @Assert\NotBlank(message="field_is_required")
+     * @ORM\Column(type="json")
+     */
+    private $roles;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created;
@@ -32,53 +48,9 @@ class User implements UserInterface
      */
     private $updated;
 
-    /**
-     * @Assert\NotBlank(message="field_is_required")
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @Assert\NotBlank(message="field_is_required")
-     * @ORM\Column(type="json")
-     */
-    private $roles;
-
-    /**
-     * @Assert\NotBlank(message="field_is_required")
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $apiToken;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="user")
-     */
-    private $blogs;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user")
-     */
-    private $notifications;
-
     public function __toString(): string
     {
         return $this->email;
-    }
-
-    public function __construct()
-    {
-        $this->blogs = new ArrayCollection();
-        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -112,16 +84,6 @@ class User implements UserInterface
         return $this->updated;
     }
 
-    public function getApiToken(): ?string
-    {
-        return $this->apiToken;
-    }
-
-    public function setApiToken(string $apiToken): void
-    {
-        $this->apiToken = $apiToken;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -140,11 +102,6 @@ class User implements UserInterface
     public function getRoles(): ?array
     {
         return $this->roles;
-    }
-
-    public function addRole(string $role): void
-    {
-        $this->roles[] = $role;
     }
 
     public function getPassword(): ?string
@@ -170,35 +127,5 @@ class User implements UserInterface
     public function eraseCredentials(): ?string
     {
         return null;
-    }
-
-    public function getBlogs(): Collection
-    {
-        return $this->blogs;
-    }
-
-    public function setBlogs(Collection $blogs): void
-    {
-        $this->blogs = $blogs;
-    }
-
-    public function getNotifications(): Collection
-    {
-        return $this->notifications;
-    }
-
-    public function setNotifications(Collection $notifications): void
-    {
-        $this->notifications = $notifications;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Notification;
-use App\Enum\NotificationTypes;
+use App\Enum\Channels;
 use App\Model\Email;
 use App\Model\Sms;
 
@@ -20,17 +20,22 @@ class NotificationService implements NotificationServiceInterface
 
     public function notify(Notification $notification): void
     {
-        switch ($notification->getType()) {
-            case NotificationTypes::ADD_SUBSCRIBER:
+        $subscriber = $notification->getSubscriber();
+        switch ($notification->getChannel()) {
+            case Channels::SMS:
             {
-                if ($notification->getEmail()) {
-                    $email = new Email($notification->getUser()->getEmail(), 'New subscriber', 'New subscriber');
-                    $this->emailService->send($email);
+                if ($subscriber->getSmsNotification()) {
+                    $sms = new Sms($notification->getSubscriber()->getPhone(), $notification->getContent());
+                    $notification->setTwilioSid($this->smsService->send($sms));
+                    break;
                 }
-
-                if ($notification->getSms()) {
-                    $sms = new Sms($notification->getUser()->getPhone(), 'New subscriber');
-                    $this->smsService->send($sms);
+            }
+            case Channels::EMAIL:
+            {
+                if ($subscriber->getEmailNotification()) {
+                    $email = new Email($notification->getSubscriber()->getEmail(), $notification->getTitle(), $notification->getHtmlContent());
+                    $this->emailService->send($email);
+                    break;
                 }
             }
         }

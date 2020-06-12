@@ -1,0 +1,64 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'notifications' | trans %}
+{% set colspan = 7 %}
+{% set header_active = 'notifications' %}
+
+{% block additional_header_right %}
+    <div>
+        {% include 'forms/search-form.html.twig' %}
+        <a class="button primary" href="{{ path('admin notification add') }}">{{ 'add_notification' | trans }}</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            {% include 'includes/sortable-column.html.twig' with {title: 'id' | trans, column: 'id', class: 'small-column center' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'subscriber' | trans, column: 'subscriber', class: 'left' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'title' | trans, column: 'title', class: 'left' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'channel' | trans, column: 'channel', class: 'medium-column center' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'status' | trans, column: 'status', class: 'medium-column center' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'created' | trans, column: 'created', class: 'medium-column center' } %}
+            <th class="center medium-column">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for notification in notifications %}
+            <tr>
+                <td class="center">{{ notification.id }}</td>
+                <td class="ellipsis"><div>{{ notification.subscriber }}</div></td>
+                <td class="ellipsis"><div>{{ notification.title ? notification.title : 'none' | trans }}</div></td>
+                <td class="center"><span class="badge {{ notification.channel | lower }}">{{ notification.channel }}</span></td>
+                <td class="center"><span class="badge {{ notification.status | lower }}">{{ notification.status }}</span></td>
+                <td class="center">{{ notification.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle">
+                            <i class="material-icons">more_horiz</i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('admin notification delete', {id: notification.id}) }}">{{ 'delete' | trans }}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if notifications | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ colspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ colspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ notificationsCount }}</b></div>
+                    {% include 'includes/paging.html.twig' %}
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

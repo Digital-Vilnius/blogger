@@ -1,0 +1,63 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'users' | trans %}
+{% set colspan = 6 %}
+{% set header_active = 'users' %}
+
+{% block additional_header_right %}
+    <div>
+        {% include 'forms/search-form.html.twig' %}
+        <a class="button primary" href="{{ path('admin user add') }}">{{ 'add_user' | trans }}</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            {% include 'includes/sortable-column.html.twig' with {title: 'id' | trans, column: 'id', class: 'small-column center' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'email' | trans, column: 'email', class: 'left' } %}
+            <th class="left">{{ 'roles' | trans }}</th>
+            {% include 'includes/sortable-column.html.twig' with {title: 'updated' | trans, column: 'updated', class: 'medium-column center' } %}
+            {% include 'includes/sortable-column.html.twig' with {title: 'created' | trans, column: 'created', class: 'medium-column center' } %}
+            <th class="center">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td class="center">{{ user.id }}</td>
+                <td class="ellipsis"><div>{{ user.email }}</div></td>
+                <td class="ellipsis"><div>{{ user.roles | join(', ') }}</div></td>
+                <td class="center">{{ user.updated | dateTimeFormat }}</td>
+                <td class="center">{{ user.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle">
+                            <i class="material-icons">more_horiz</i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('admin user edit', {id: user.id}) }}">{{ 'edit' | trans }}</a>
+                            <a class="dropdown-item" href="{{ path('admin applications', {id: user.id}) }}">{{ 'delete' | trans }}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if users | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ colspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ colspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ usersCount }}</b></div>
+                    {% include 'includes/paging.html.twig' %}
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

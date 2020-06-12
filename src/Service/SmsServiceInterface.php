@@ -6,5 +6,5 @@ use App\Model\Sms;
 
 interface SmsServiceInterface
 {
-    public function send(Sms $sms): void;
+    public function send(Sms $sms): string;
 }

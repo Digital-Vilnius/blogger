@@ -2,11 +2,12 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Blog;
+use App\Entity\Application;
 use App\Entity\Subscriber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,23 +24,30 @@ class SubscriberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => $this->translator->trans('email')
+            ->add('emailNotification', CheckboxType::class, [
+                'label' => $this->translator->trans('email'),
+                'attr' => ['class' => 'switch'],
+            ])
+            ->add('smsNotification', CheckboxType::class, [
+                'label' => $this->translator->trans('sms'),
+                'attr' => ['class' => 'switch'],
+            ])
+            ->add('email', TextType::class, [
+                'label' => $this->translator->trans('email'),
+            ])
+            ->add('application', EntityType::class, [
+                'label' => $this->translator->trans('application'),
+                'class' => Application::class
+            ])
+            ->add('phone', TextType::class, [
+                'label' => $this->translator->trans('phone'),
             ]);
-
-        if ($options['isAdmin']) {
-            $builder->add('blog', EntityType::class, [
-                'label' => $this->translator->trans('blog'),
-                'class' => Blog::class
-            ]);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Subscriber::class,
-            'isAdmin' => true
         ]);
     }
 }

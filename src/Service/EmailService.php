@@ -29,6 +29,9 @@ class EmailService implements EmailServiceInterface
         $mailerEmail->from($this->systemEmail);
         $mailerEmail->text($email->getMessage());
         $mailerEmail->to($email->getReceiver());
-        $this->mailer->send($mailerEmail);
+        $response = $this->mailer->send($mailerEmail);
+
+        dump($response);
+        die();
     }
 }

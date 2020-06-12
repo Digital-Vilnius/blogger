@@ -1,0 +1,11 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'edit_user' | trans %}
+{% set header_active = 'users' %}
+
+{% block additional_header %}
+    <a class="button secondary" href="{{ path('admin users') }}">{{ 'back' | trans }}</a>
+{% endblock %}
+
+{% block main %}
+    {% include 'forms/user-form.html.twig' %}
+{% endblock %}

@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('shared/pages/login.html.twig', [
+        return $this->render('pages/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError()
         ]);
@@ -54,10 +54,10 @@ class SecurityController extends AbstractController
             $user->setPassword($encodedPassword);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('password_is_successfully_changed'));
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('admin applications');
         }
 
-        return $this->render('user/pages/change-password.html.twig', [
+        return $this->render('pages/change-password.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -41,8 +41,9 @@ class UserRepository extends ServiceEntityRepository
     {
         if ($filter->getKeyword()) {
             $orX = $qb->expr()->orX();
-            $orX->add($qb->expr()->like('user.email', $filter->getKeyword()));
-            $qb->andWhere($qb->expr()->orX($orX));
+            $orX->add($qb->expr()->like('user.roles', ':keyword'));
+            $orX->add($qb->expr()->like('user.email', ':keyword'));
+            $qb->andWhere($qb->expr()->orX($orX))->setParameter('keyword', '%' . $filter->getKeyword() . '%');
         }
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Controller\Base\ListController;
-use App\Form\Type\NotificationsTypes;
+use App\Entity\Notification;
+use App\Filter\NotificationsFilter;
+use App\Form\Type\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,28 +21,43 @@ class NotificationsController extends ListController
     public function __construct(ValidatorInterface $validator, EntityManagerInterface $entityManager, TranslatorInterface $translator)
     {
         parent::__construct($validator);
-        $this->entityManager = $entityManager;
         $this->translator = $translator;
+        $this->entityManager = $entityManager;
     }
 
     /**
-     * @Route("/notifications", name="notifications")
+     * @Route("/admin/notifications/{page}", name="admin notifications", requirements={"page"="\d+"})
      * @param Request $request
+     * @param int $page
      * @return Response
      */
-    public function fetch(Request $request)
+    public function fetch(Request $request, int $page = 1)
     {
-        $form = $this->createForm(NotificationsTypes::class, $this->getUser());
-        $form->handleRequest($request);
+        $filter = $this->initFilter($request);
+        $sort = $this->initSort($request);
+        $paging = $this->initPaging($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('notifications_are_successfully_updated'));
-            return $this->redirectToRoute('notifications');
-        }
+        $searchForm = $this->createForm(SearchType::class, $filter);
+        $searchForm->handleRequest($request);
 
-        return $this->render('user/pages/notifications.html.twig', [
-            'form' => $form->createView(),
+        $notifications = $this->entityManager->getRepository(Notification::class)->fetchAll($filter, $sort, $paging);
+        $notificationsCount = $this->entityManager->getRepository(Notification::class)->countAll($filter);
+
+        return $this->render('pages/notifications.html.twig', [
+            'notifications' => $notifications,
+            'notificationsCount' => $notificationsCount,
+            'page' => $page,
+            'searchForm' => $searchForm->createView(),
+            'pagesCount' => ceil($notificationsCount / $paging->getLimit())
         ]);
+    }
+
+    private function initFilter(Request $request)
+    {
+        $filter = new NotificationsFilter();
+        $filter->setKeyword($request->query->get('keyword', null));
+        $filter->setApplicationId($request->query->get('applicationId', null));
+        $filter->setSubscriberId($request->query->get('subscriberId', null));
+        return $filter;
     }
 }

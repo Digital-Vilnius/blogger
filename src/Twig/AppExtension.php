@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use App\Entity\Blog;
+use App\Service\BreadcrumbsServiceInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +17,11 @@ class AppExtension extends AbstractExtension
     private $entityManager;
     private $router;
     private $translator;
+    private $breadcrumbsService;
 
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, UrlGeneratorInterface $router)
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, UrlGeneratorInterface $router, BreadcrumbsServiceInterface $breadcrumbsService)
     {
+        $this->breadcrumbsService = $breadcrumbsService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->router = $router;
@@ -28,8 +30,8 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getBlogs', [$this, 'getBlogs']),
             new TwigFunction('getSortRoute', [$this, 'getSortRoute']),
+            new TwigFunction('getBreadcrumbs', [$this, 'getBreadcrumbs']),
             new TwigFunction('getPagingRoute', [$this, 'getPagingRoute'])
         ];
     }
@@ -65,14 +67,14 @@ class AppExtension extends AbstractExtension
         return $this->router->generate($request->get('_route'), $params);
     }
 
-    public function getBlogs()
-    {
-        return $this->entityManager->getRepository(Blog::class)->fetchUserBlogs();
-    }
-
     public function dateTimeFormat(DateTime $dateTime = null)
     {
         if ($dateTime) return $dateTime->format('Y-m-d H:i:s');
         return $this->translator->trans('none');
+    }
+
+    public function getBreadcrumbs(Request $request)
+    {
+        return $this->breadcrumbsService->getBreadcrumbs($request);
     }
 }

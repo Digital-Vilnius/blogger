@@ -1,0 +1,58 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = application.name %}
+{% set header_active = 'applications' %}
+{% set breadcrumbs = [
+    {link: path('admin applications'),title: 'applications' | trans},
+    {title: application.name}
+] %}
+{% set notificationsColspan = 6 %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="small-column center">{{ 'id' | trans }}</th>
+            <th class="left">{{ 'title' | trans }}</th>
+            <th class="left">{{ 'channel' | trans }}</th>
+            <th class="medium-column center">{{ 'status' | trans }}</th>
+            <th class="medium-column center">{{ 'created' | trans }}</th>
+            <th class="center medium-column">{{ 'actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for notification in notifications %}
+            <tr>
+                <td class="center">{{ notification.id }}</td>
+                <td class="ellipsis"><div>{{ notification.title ? notification.title : 'none' | trans }}</div></td>
+                <td class="ellipsis"><div>{{ notification.channel }}</div></td>
+                <td class="center"><span class="badge {{ notification.status | lower }}">{{ notification.status }}</span></td>
+                <td class="center">{{ notification.created | dateTimeFormat }}</td>
+                <td class="center">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle">
+                            <i class="material-icons">more_horiz</i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('admin notification delete', {id: notification.id}) }}">{{ 'delete' | trans }}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if notifications | length == 0 %}
+            <tr>
+                <td class="no-data" colspan="{{ notificationsColspan }}">{{ 'no_data' | trans }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{{ notificationsColspan }}">
+                <div class="paging-container">
+                    <div class="count">{{ 'count' | trans }} : <b>{{ notificationsCount }}</b></div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

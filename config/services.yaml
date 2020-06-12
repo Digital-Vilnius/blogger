@@ -18,15 +18,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\EventSubscriber\SubscriberSubscriber:
-        tags:
-            - { name: 'doctrine.event_subscriber' }
-
-    App\EventSubscriber\PostSubscriber:
-        tags:
-            - { name: 'doctrine.event_subscriber' }
-
-    App\EventSubscriber\CommentSubscriber:
+    App\EventSubscriber\NotificationSubscriber:
         tags:
             - { name: 'doctrine.event_subscriber' }
 

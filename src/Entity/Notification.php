@@ -2,17 +2,12 @@
 
 namespace App\Entity;
 
+use App\Enum\NotificationStatuses;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
- * @ORM\Table(uniqueConstraints={
- *     @UniqueConstraint(columns={"user_id", "type"})
- * })
- * @UniqueEntity(fields={"user", "type"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Notification
@@ -25,40 +20,45 @@ class Notification
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
-    private $created;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $sms;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $push;
+    private $channel;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $type;
+    private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notifications")
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $content;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $htmlContent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subscriber", inversedBy="notifications")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $subscriber;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    public function __construct()
+    {
+        $this->status = NotificationStatuses::PENDING;
+    }
 
     /**
      * @ORM\PrePersist
@@ -66,17 +66,6 @@ class Notification
     public function onPrePersist()
     {
         $this->created = new DateTime('now');
-        $this->email = true;
-        $this->push = true;
-        $this->sms = false;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updated = new DateTime('now');
     }
 
     public function getId(): int
@@ -89,58 +78,63 @@ class Notification
         return $this->created;
     }
 
-    public function getUpdated(): ?DateTime
+    public function getSubscriber(): ?Subscriber
     {
-        return $this->updated;
+        return $this->subscriber;
     }
 
-    public function getUser(): ?User
+    public function setSubscriber(Subscriber $subscriber): void
     {
-        return $this->user;
+        $this->subscriber = $subscriber;
     }
 
-    public function setUser(User $user): void
+    public function getStatus(): ?string
     {
-        $this->user = $user;
+        return $this->status;
     }
 
-    public function getSms(): ?bool
+    public function setStatus(string $status): void
     {
-        return $this->sms;
+        $this->status = $status;
     }
 
-    public function setSms(bool $sms): void
+    public function getContent(): ?string
     {
-        $this->sms = $sms;
+        return $this->content;
     }
 
-    public function getPush(): ?bool
+    public function setContent(string $content): void
     {
-        return $this->push;
+        $this->content = $content;
     }
 
-    public function setPush(bool $push): void
+    public function getHtmlContent(): ?string
     {
-        $this->push = $push;
+        return $this->htmlContent;
     }
 
-    public function getType(): string
+    public function setHtmlContent(string $htmlContent): void
     {
-        return $this->type;
+        $this->htmlContent = $htmlContent;
     }
 
-    public function setType(string $type): void
+    public function getChannel(): ?string
     {
-        $this->type = $type;
+        return $this->channel;
     }
 
-    public function getEmail(): bool
+    public function setChannel(string $channel): void
     {
-        return $this->email;
+        $this->channel = $channel;
     }
 
-    public function setEmail(bool $email): void
+    public function getTitle(): ?string
     {
-        $this->email = $email;
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 }

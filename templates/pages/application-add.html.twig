@@ -1,0 +1,11 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'add_application' | trans %}
+{% set header_active = 'applications' %}
+{% set breadcrumbs = [
+    {link: path('admin applications'),title: 'applications' | trans},
+    {title: 'add_application' | trans}
+] %}
+
+{% block main %}
+    {% include 'forms/application-form.html.twig' %}
+{% endblock %}

@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Blog;
-use App\Entity\Post;
 use App\Entity\Subscriber;
 use App\Form\Type\SubscriberType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,79 +24,95 @@ class SubscriberController extends AbstractController
     }
 
     /**
-     * @Route("/blog/{blogId}/subscriber/add", name="blog subscriber add")
-     * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
+     * @Route("/admin/subscriber/add", name="admin subscriber add")
      * @param Request $request
-     * @param Blog $blog
      * @return RedirectResponse|Response
      */
-    public function add(Request $request, Blog $blog)
+    public function add(Request $request)
     {
         $subscriber = new Subscriber();
-        $subscriber->setBlog($blog);
-        $form = $this->createForm(SubscriberType::class, $subscriber, ['isAdmin' => false]);
+        $form = $this->createForm(SubscriberType::class, $subscriber);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($subscriber);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('subscriber_is_successfully_added'));
-            return $this->redirectToRoute('blog subscribers', ['blogId' => $blog->getId()]);
+            return $this->redirectToRoute('admin subscribers');
         }
 
-        return $this->render('user/pages/subscriber-add.html.twig', [
-            'form' => $form->createView(),
-            'blog' => $blog
+        return $this->render('pages/subscriber-add.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/blog/{blogId}/subscriber/{id}/edit", name="blog subscriber edit")
-     * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
-     * @Entity("subscriber", expr="repository.fetchUserSubscriber(id)")
+     * @Route("/admin/subscriber/{id}/edit", name="admin subscriber edit", requirements={"id"="\d+"})
      * @param Request $request
-     * @param Blog $blog
      * @param Subscriber $subscriber
      * @return RedirectResponse|Response
      */
-    public function edit(Request $request, Blog $blog, Subscriber $subscriber)
+    public function edit(Request $request, Subscriber $subscriber)
     {
-        $form = $this->createForm(SubscriberType::class, $subscriber, ['isAdmin' => false]);
+        $form = $this->createForm(SubscriberType::class, $subscriber);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('subscriber_is_successfully_edited'));
-            return $this->redirectToRoute('blog subscribers', ['blogId' => $blog->getId()]);
+            return $this->redirectToRoute('admin subscribers');
         }
 
-        return $this->render('user/pages/subscriber-edit.html.twig', [
-            'form' => $form->createView(),
-            'blog' => $blog
+        return $this->render('pages/subscriber-edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/blog/{blogId}/subscriber/{id}/delete", name="blog subscriber delete")
-     * @Entity("blog", expr="repository.fetchUserBlog(blogId)")
-     * @Entity("subscriber", expr="repository.fetchUserSubscriber(id)")
+     * @Route("/admin/subscriber/{id}/toggle-email", name="admin subscriber toggle email", requirements={"id"="\d+"})
      * @param Request $request
      * @param Subscriber $subscriber
-     * @param Blog $blog
      * @return RedirectResponse|Response
      */
-    public function delete(Request $request, Subscriber $subscriber, Blog $blog)
+    public function toggleEmailNotification(Request $request, Subscriber $subscriber)
+    {
+        $subscriber->setEmailNotification(!$subscriber->getEmailNotification());
+        $this->entityManager->flush();
+        $this->addFlash('success', $this->translator->trans('subscriber_email_notification_is_successfully_updated'));
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/admin/subscriber/{id}/toggle-sms", name="admin subscriber toggle sms", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param Subscriber $subscriber
+     * @return RedirectResponse|Response
+     */
+    public function toggleSmsNotification(Request $request, Subscriber $subscriber)
+    {
+        $subscriber->setSmsNotification(!$subscriber->getSmsNotification());
+        $this->entityManager->flush();
+        $this->addFlash('success', $this->translator->trans('subscriber_sms_notification_is_successfully_updated'));
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/admin/subscriber/{id}/delete", name="admin subscriber delete", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param Subscriber $subscriber
+     * @return RedirectResponse|Response
+     */
+    public function delete(Request $request, Subscriber $subscriber)
     {
         if ($request->getMethod() === Request::METHOD_POST) {
             $this->entityManager->remove($subscriber);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('subscriber_is_successfully_deleted'));
-            return $this->redirectToRoute('blog subscribers', ['blogId' => $blog->getId()]);
+            return $this->redirectToRoute('admin subscribers');
         }
 
-        return $this->render('user/pages/subscriber-delete.html.twig', [
-            'subscriber' => $subscriber,
-            'blog' => $blog
+        return $this->render('pages/subscriber-delete.html.twig', [
+            'subscriber' => $subscriber
         ]);
     }
 }

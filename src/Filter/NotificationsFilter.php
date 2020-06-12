@@ -2,28 +2,30 @@
 
 namespace App\Filter;
 
-class NotificationsFilter
+use App\Model\SearchableFilter;
+
+class NotificationsFilter extends SearchableFilter
 {
-    private $keyword;
-    private $userId;
+    private $applicationId;
+    private $subscriberId;
 
-    public function getKeyword(): ?string
+    public function getApplicationId(): ?int
     {
-        return $this->keyword;
+        return $this->applicationId;
     }
 
-    public function setKeyword(?string $keyword): void
+    public function setApplicationId(?int $applicationId): void
     {
-        $this->keyword = $keyword;
+        $this->applicationId = $applicationId;
     }
 
-    public function getUserId(): ?int
+    public function getSubscriberId(): ?int
     {
-        return $this->userId;
+        return $this->subscriberId;
     }
 
-    public function setUserId(?int $userId): void
+    public function setSubscriberId(?int $subscriberId): void
     {
-        $this->userId = $userId;
+        $this->subscriberId = $subscriberId;
     }
 }

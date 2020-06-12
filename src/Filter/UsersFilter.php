@@ -2,17 +2,9 @@
 
 namespace App\Filter;
 
-class UsersFilter
+use App\Model\SearchableFilter;
+
+class UsersFilter extends SearchableFilter
 {
-    private $keyword;
 
-    public function getKeyword(): ?string
-    {
-        return $this->keyword;
-    }
-
-    public function setKeyword(?string $keyword): void
-    {
-        $this->keyword = $keyword;
-    }
 }

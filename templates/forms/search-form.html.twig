@@ -1,0 +1,5 @@
+{{ form_start(searchForm, {attr: {'class': 'form search'}}) }}
+    {{ form_errors(searchForm) }}
+    {{ form_row(searchForm.keyword) }}
+    <button class="button secondary" type="submit">{{ 'buttons.search' | trans }}</button>
+{{ form_end(searchForm) }}

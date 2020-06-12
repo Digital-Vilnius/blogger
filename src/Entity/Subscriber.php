@@ -3,17 +3,20 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SubscriberRepository")
  * @ORM\Table(uniqueConstraints={
- *     @UniqueConstraint(columns={"blog_id", "email"})
+ *     @UniqueConstraint(columns={"application_id", "email"}),
+ *     @UniqueConstraint(columns={"application_id", "phone"})
  * })
- * @UniqueEntity(fields={"blog", "email"})
+ * @UniqueEntity(fields={"application", "email"})
+ * @UniqueEntity(fields={"application", "phone"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Subscriber
@@ -26,9 +29,35 @@ class Subscriber
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
-    private $created;
+    private $email;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $smsNotification;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emailNotification;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Application", inversedBy="subscribers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $application;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="subscriber")
+     */
+    private $notifications;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -36,20 +65,18 @@ class Subscriber
     private $updated;
 
     /**
-     * @Assert\NotBlank(message="field_is_required")
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
      */
-    private $email;
+    private $created;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="subscribers")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $blog;
+    public function __construct()
+    {
+        $this->notifications = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
-        return $this->email;
+        return $this->email ? $this->email : $this->phone;
     }
 
     /**
@@ -83,6 +110,16 @@ class Subscriber
         return $this->updated;
     }
 
+    public function getApplication(): ?Application
+    {
+        return $this->application;
+    }
+
+    public function setApplication(Application $application): void
+    {
+        $this->application = $application;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -93,13 +130,43 @@ class Subscriber
         $this->email = $email;
     }
 
-    public function getBlog(): ?Blog
+    public function getPhone(): ?string
     {
-        return $this->blog;
+        return $this->phone;
     }
 
-    public function setBlog(Blog $blog): void
+    public function setPhone(string $phone): void
     {
-        $this->blog = $blog;
+        $this->phone = $phone;
+    }
+
+    public function getSmsNotification(): ?bool
+    {
+        return $this->smsNotification;
+    }
+
+    public function setSmsNotification(bool $smsNotification): void
+    {
+        $this->smsNotification = $smsNotification;
+    }
+
+    public function getEmailNotification(): ?bool
+    {
+        return $this->emailNotification;
+    }
+
+    public function setEmailNotification(bool $emailNotification): void
+    {
+        $this->emailNotification = $emailNotification;
+    }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(Collection $notifications): void
+    {
+        $this->notifications = $notifications;
     }
 }

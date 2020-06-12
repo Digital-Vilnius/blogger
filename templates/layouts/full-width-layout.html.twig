@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% set breadcrumbs = getBreadcrumbs(app.request) %}
+
+{% block body %}
+    <header class="header">
+        {% include 'navigation.html.twig' %}
+        <div class="page-title">
+            <div class="container">
+                <div class="title-container">
+                    <h2 class="subtitle">{{ title }}</h2>
+                    {% if breadcrumbs | length > 0 %}
+                        <div class="breadcrumbs">
+                            {% for breadcrumb in breadcrumbs %}
+                                <div class="breadcrumbs-item"><a class="breadcrumbs-item-link" href="{{ breadcrumb.link }}">{{ breadcrumb.title }}</a></div>
+                            {% endfor %}
+                            <div class="breadcrumbs-item"><span class="breadcrumbs-item-active" >{{ title }}</span></div>
+                        </div>
+                    {% endif %}
+                </div>
+                {% block additional_header_right %}{% endblock %}
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        {% include 'messages.html.twig' %}
+        <div class="container">
+            {% block main %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

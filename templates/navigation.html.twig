@@ -1,0 +1,30 @@
+<nav class="top-navigation navigation">
+    <div class="container">
+        <div>
+            <a class="title-container" href="{{ path('admin applications') }}">
+                <span class="logo"></span>
+                <h1 class="title">otifier</h1>
+            </a>
+            <a class="navigation-item {% if header_active is defined and header_active == 'dashboard' %}active{% endif %}" href="{{ path('admin dashboard') }}">{{ 'dashboard' | trans }}</a>
+            <a class="navigation-item {% if header_active is defined and header_active == 'applications' %}active{% endif %}" href="{{ path('admin applications') }}">{{ 'applications' | trans }}</a>
+            <a class="navigation-item {% if header_active is defined and header_active == 'subscribers' %}active{% endif %}" href="{{ path('admin subscribers') }}">{{ 'subscribers' | trans }}</a>
+            <a class="navigation-item {% if header_active is defined and header_active == 'notifications' %}active{% endif %}" href="{{ path('admin notifications') }}">{{ 'notifications' | trans }}</a>
+            <a class="navigation-item {% if header_active is defined and header_active == 'users' %}active{% endif %}" href="{{ path('admin users') }}">{{ 'users' | trans }}</a>
+        </div>
+        <div>
+            <div class="dropdown dark">
+                <div class="dropdown-toggle">
+                    <div class="avatar">{{ app.user.email[:2] }}</div>
+                    <span class="navigation-item">
+                        {{ app.user.email }}
+                        <i class="material-icons">arrow_drop_down</i>
+                    </span>
+                </div>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('change password') }}">{{ 'change_password' | trans }}</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">{{ 'logout' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

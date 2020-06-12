@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.email) }}
+{{ form_row(form.application) }}
+    {{ form_row(form.phone) }}
+    {{ form_row(form.smsNotification) }}
+    {{ form_row(form.emailNotification) }}
+<button class="button primary" type="submit">{{ 'save' | trans }}</button>
+{{ form_end(form) }}

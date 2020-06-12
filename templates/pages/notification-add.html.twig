@@ -1,0 +1,11 @@
+{% extends 'layouts/full-width-layout.html.twig' %}
+{% set title = 'add_notification' | trans %}
+{% set header_active = 'notifications' %}
+{% set breadcrumbs = [
+    {link: path('admin notifications'), title: 'notifications' | trans},
+    {title: 'add_notification' | trans}
+] %}
+
+{% block main %}
+    {% include 'forms/notification-form.html.twig' %}
+{% endblock %}

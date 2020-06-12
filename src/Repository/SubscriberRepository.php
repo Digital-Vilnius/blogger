@@ -9,26 +9,22 @@ use App\Model\Sort;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SubscriberRepository extends ServiceEntityRepository
 {
-    private $user;
-
-    public function __construct(ManagerRegistry $registry, TokenStorageInterface $tokenStorage)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Subscriber::class);
-        $this->user = $tokenStorage->getToken()->getUser();
     }
 
-    public function fetchUserSubscriber(int $id)
+    public function findApplicationSubscriber(int $id, int $applicationId)
     {
         return $this->createQueryBuilder('subscriber')
-            ->join('subscriber.blog', 'blog')
-            ->where('blog.user = :user')
+            ->join('subscriber.application', 'application')
+            ->where('application.id = :applicationId')
             ->andWhere('subscriber.id = :id')
             ->setParameter('id', $id)
-            ->setParameter('user', $this->user)
+            ->setParameter('applicationId', $applicationId)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -55,16 +51,19 @@ class SubscriberRepository extends ServiceEntityRepository
 
     private function applyFilter(QueryBuilder $qb, SubscribersFilter $filter)
     {
+        $qb->join('subscriber.application', 'application');
+
         if ($filter->getKeyword()) {
             $orX = $qb->expr()->orX();
-            $orX->add($qb->expr()->like('subscriber.email', $filter->getKeyword()));
-            $qb->andWhere($qb->expr()->orX($orX));
+            $orX->add($qb->expr()->like('subscriber.email', ':keyword'));
+            $orX->add($qb->expr()->like('subscriber.phone', ':keyword'));
+            $orX->add($qb->expr()->like('application.name', ':keyword'));
+            $qb->andWhere($qb->expr()->orX($orX))->setParameter('keyword', '%' . $filter->getKeyword() . '%');
         }
 
-        if ($filter->getBlogId()) {
-            $qb->join('subscriber.blog', 'blog')
-                ->andWhere('blog.id = :blogId')
-                ->setParameter('blogId', $filter->getBlogId());
+        if ($filter->getApplicationId()) {
+            $qb->andWhere('application.id = :applicationId')
+                ->setParameter('applicationId', $filter->getApplicationId());
         }
     }
 }

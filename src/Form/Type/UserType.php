@@ -36,12 +36,8 @@ class UserType extends AbstractType
                 'label' => $this->translator->trans('roles'),
                 'choices' => [
                     $this->translator->trans('admin') => 'ROLE_ADMIN',
-                    $this->translator->trans('super_admin') => 'ROLE_SUPER_ADMIN',
                 ],
                 'multiple' => true,
-            ])
-            ->add('apiToken', TextType::class, [
-                'label' => $this->translator->trans('api_token')
             ])
             ->add('password', PasswordType::class, [
                 'label' => $this->translator->trans('password')
