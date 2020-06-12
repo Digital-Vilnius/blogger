@@ -7,6 +7,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import "variables/helpers";
 @import "variables/fonts";
 
+@import "libs/choices";
+
 @import "base";
 @import "container";
 @import "table";

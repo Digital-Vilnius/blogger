@@ -49,7 +49,10 @@ class PostType extends AbstractType
             ->add('category', EntityType::class, [
                 'label' => $this->translator->trans('category'),
                 'class' => Category::class,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-choice'
+                ]
             ])
             ->add('tags', TextType::class, [
                 'label' => $this->translator->trans('tags'),

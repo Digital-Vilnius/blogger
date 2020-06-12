@@ -16,6 +16,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "choices.js": "^9.0.1",
         "ckeditor": "^4.12.1",
         "material-icons": "^0.3.1"
     }
